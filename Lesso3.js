@@ -52,10 +52,13 @@ const usersArray = [
     },
    ];
 
+
 //1)
 let richUsersArray = JSON.parse(JSON.stringify(usersArray));
-richUsersArray= richUsersArray.reduce((a, b) => parseInt(a.balance) > parseInt(b.balance) ? a : b);
-console.log(richUsersArray.name)
+richUsersArray= richUsersArray.reduce((acc, curr) => parseInt(acc.balance) < parseInt(curr.balance) ?  curr.name: acc );
+console.log(richUsersArray)
+
+
 //2)
 let sortedUsersArray = JSON.parse(JSON.stringify(usersArray));
 function SortArray(x, y){
@@ -66,23 +69,28 @@ function SortArray(x, y){
 sortedUsersArray.sort(SortArray)
 console.log(sortedUsersArray)
 
+
 //3)
-let sumUser = JSON.parse(JSON.stringify(usersArray));
-sumUser=sumUser.reduce((acc,curr) =>{
+const arrFriends = usersArray.map(x=> x.friends)
+const arrAllUsers = usersArray.concat(arrFriends.flat())
+let sumAllUser = JSON.parse(JSON.stringify(arrAllUsers));
+sumAllUser=sumAllUser.reduce((acc,curr) =>{
     return acc += parseInt (curr.balance)
 }, 0);
+console.log(sumAllUser)
 
-console.log(sumUser)
 
 //4)
 let deleteRussel = JSON.parse(JSON.stringify(usersArray));
 deleteRussel.splice(3,4);
 console.log(deleteRussel);
 
+
 //5)
 let deleteIsaac = JSON.parse(JSON.stringify(usersArray));
 deleteIsaac.splice(1,1);
 console.log(deleteIsaac);
+
 
 //6)
 let addHarry= JSON.parse(JSON.stringify(usersArray));
@@ -92,6 +100,7 @@ addHarry.splice(1,0, {
     } )
 console.log(addHarry);
 
+
 //7)
 let addConor= JSON.parse(JSON.stringify(usersArray));
 addConor.push( {
@@ -100,31 +109,41 @@ addConor.push( {
     } )
 console.log(addConor);
 
-//8)
-var eachObject = function(usersArray){
-    for (key in usersArray) {
-        if( typeof(usersArray[key]) === 'object' ){
-            eachObject(usersArray[key]);
-        }  else {
-            if(key === 'name' || key === 'balance' ){
 
-            console.log(usersArray[key]);}
-        }
-    }
-};
-eachObject(usersArray);
+//8)
+const arrUser = usersArray.map(x=> x.friends)
+const arrUsers = usersArray.concat(arrFriends.flat())
+const removeDuplicates = (array, key) => {
+    return array.reduce((arr, item) => {
+      const removed = arr.filter(i => i[key] !== item[key]);
+      return [...removed, item];
+    }, []);
+  };
+console.log(removeDuplicates(arrUsers, 'name'));
 
 //9)
-let sortRichUsers=(usersArray);
-console.log(sortRichUsers)
-sortRichUsers= usersArray.filter((item) => parseInt(item.balance)> 2000)
+let sortRichUsers=JSON.parse(JSON.stringify(arrUsers));
+sortRichUsers= sortRichUsers.filter((item) => parseInt(item.balance)> 2000)
 console.log(sortRichUsers)
 
 
 //10)
-let richUsersAllArray = JSON.parse(JSON.stringify(usersArray));
-richUsersAllArray= richUsersAllArray.reduce((a, b) => parseInt(a.balance) > parseInt(b.balance) ? a : b);
-console.log(richUsersAllArray.name)
+let richFriend = JSON.parse(JSON.stringify(usersArray));
+richFriend = richFriend.reduce((acc,curr) =>{
+    let richestInside = acc;
+    if(acc.friends?.length){
+         acc.friends.forEach((friend)=>{
+            if(parseInt(friend.balance)>parseInt(acc.balance)){
+                richestInside=friend
+            }
+         });
+    }
+    const friendOrUser= parseInt(curr.balance)< parseInt(richestInside.balance)? richestInside:curr;
+    return parseInt(acc.balance) < parseInt(friendOrUser.balance)? friendOrUser:acc.name;
+});
+
+console.log(richFriend )
+
 
 //11)
 
@@ -134,3 +153,23 @@ const arr2 = [10, 'a', 5, 5, 1];
 console.log(arr1===arr2)
 
 //13)
+
+let str1= "искать такси"
+
+let str2= "привет мир"
+
+function palindrome1(str1) {
+    return str1.split('').reverse().join('') == str1;
+  }
+console.log(palindrome1(str1))
+
+function palindrome2(str1) {
+    return str1.split('').reverse().join('') == str2;
+  }
+console.log(palindrome2(str2))
+
+
+
+
+
+ 
