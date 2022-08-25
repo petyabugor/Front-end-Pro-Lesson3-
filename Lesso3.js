@@ -150,24 +150,33 @@ console.log(richFriend )
 //12)
 const arr1 = [10, 'a', '5', 5, 1]; 
 const arr2 = [10, 'a', 5, 5, 1];
-console.log(arr1===arr2)
+
+function compareArrays(a, b) {
+    if(a.length === b.length && a.every((n, i) => n === b[i])){
+      return true;
+    }
+      else{
+        return false;
+      }
+}
+console.log(compareArrays(arr1,arr2))
 
 //13)
-
 let str1= "искать такси"
-
 let str2= "привет мир"
 
-function palindrome1(str1) {
-    return str1.split('').reverse().join('') == str1;
-  }
-console.log(palindrome1(str1))
+function palindrome(a){
+    let q = a.split(' ').join('')
+    let b =q.split('').reverse().join('')
+    if(q===b){
+        return true;
+    } else{
+        return false;
+    }
+}
 
-function palindrome2(str1) {
-    return str1.split('').reverse().join('') == str2;
-  }
-console.log(palindrome2(str2))
-
+console.log(palindrome(str1))
+console.log(palindrome(str2))
 
 
 
